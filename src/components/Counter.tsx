@@ -10,6 +10,7 @@ export const Counter = () => {
     setCount(count + 1);
   };
 
+  console.log("render Counter");
   return (
     <>
       <div>Counter:{count}</div>
