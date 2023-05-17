@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { CounterDownButton } from "./CounterDownButton";
+import { CounterUpButton } from "./CounterUpButton";
 
 export const Counter = () => {
   const [count, setCount] = useState(0);
@@ -14,8 +16,8 @@ export const Counter = () => {
   return (
     <>
       <div>Counter:{count}</div>
-      <button onClick={countDown}>カウントDown</button>
-      <button onClick={countUp}>カウントUpo</button>
+      <CounterDownButton countDown={countDown}></CounterDownButton>
+      <CounterUpButton countUp={countUp}></CounterUpButton>
     </>
   );
 };
