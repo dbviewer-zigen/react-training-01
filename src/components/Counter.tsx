@@ -1,27 +1,50 @@
-import React, { useReducer, useState } from "react";
+import React, {
+  Dispatch,
+  useContext,
+  useMemo,
+  useReducer,
+  useState,
+} from "react";
 import { CounterDownButton } from "./CounterDownButton";
 import { CounterUpButton } from "./CounterUpButton";
-import { CountReducer } from "./CountReducer";
+import { Actions, CountReducer } from "./CountReducer";
+import { CountContext } from "./CounterContext";
 
-// useStateの代わりにuseReducerを使う
+// カウント表示（可変部分)とカウンターボタン(固定部分)にコンポートを分割
+export const Count = () => {
+  console.log("render Count");
+  // CountContextからcountのみを取得
+  const { count } = useContext(CountContext);
+  return <div>{count}</div>;
+};
+
+// type CounterDispatch = Dispatch<Actions>;
+
 export const Counter = () => {
   //const [count, setCount] = useState(0);
+  // const [count, dispatch] = useReducer(CountReducer, 0);
 
-  const [count, dispatch] = useReducer(CountReducer, 0);
+  // CountContextからdispatchのみを取得
+  const { dispatch } = useContext(CountContext);
 
-  const countDown = () => {
-    dispatch({ type: "decrement" });
-  };
-  const countUp = () => {
-    dispatch({ type: "increment" });
-  };
-
-  console.log("render Counter");
-  return (
-    <>
-      <div>Counter:{count}</div>
-      <CounterDownButton countDown={countDown}></CounterDownButton>
-      <CounterUpButton countUp={countUp}></CounterUpButton>
-    </>
-  );
+  // CountContext.Providerのvalueが更新されると再レンダリングするため、
+  // React.memoを使って再レンダリングしないようにボタンコンポーネントをメモ化する。
+  // countを渡さずにdispathのみ渡しているところがポイント
+  return <DispatchButton dispatch={dispatch} />;
 };
+
+// dispatch を Props として受け取るコンポーネントをメモ化し、不要な再レンダリングを防ぐ
+const DispatchButton = React.memo(
+  ({ dispatch }: { dispatch: React.Dispatch<Actions> }) => {
+    console.log("render DispatchButton ", typeof dispatch);
+
+    return (
+      <>
+        {/* <button onClick={() => dispatch({ type: "decrement" })}>-</button> */}
+        {/* <button onClick={() => dispatch({ type: "increment" })}>+</button> */}
+        <CounterDownButton countDown={() => dispatch({ type: "decrement" })} />
+        <CounterUpButton countUp={() => dispatch({ type: "increment" })} />
+      </>
+    );
+  }
+);

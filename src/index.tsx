@@ -3,7 +3,8 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Counter } from "./components/Counter";
+import { Count, Counter } from "./components/Counter";
+import { CountProvider } from "./components/CounterContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,7 +12,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <Counter />
+    <CountProvider>
+      <Count />
+      <Counter />
+    </CountProvider>
   </React.StrictMode>
 );
 
