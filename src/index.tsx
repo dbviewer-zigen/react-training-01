@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Count, Counter } from "./components/Counter";
+import { Count, CountButtonArea } from "./components/Counter";
 import { CountProvider } from "./components/CounterContext";
 
 const root = ReactDOM.createRoot(
@@ -12,9 +12,10 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     {/* <App /> */}
+    <h4>step04_メモ化による再描画防止 ReactMemo利用編</h4>
     <CountProvider>
       <Count />
-      <Counter />
+      <CountButtonArea />
     </CountProvider>
   </React.StrictMode>
 );

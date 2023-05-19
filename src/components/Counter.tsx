@@ -20,7 +20,7 @@ export const Count = () => {
 
 // type CounterDispatch = Dispatch<Actions>;
 
-export const Counter = () => {
+export const CountButtonArea = () => {
   //const [count, setCount] = useState(0);
   // const [count, dispatch] = useReducer(CountReducer, 0);
 

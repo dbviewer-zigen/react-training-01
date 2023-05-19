@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 
 export const CounterDownButton = ({ countDown }: { countDown: () => void }) => {
   console.log("render CounterDownButton");
