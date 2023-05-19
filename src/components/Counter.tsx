@@ -40,8 +40,6 @@ const DispatchButton = React.memo(
 
     return (
       <>
-        {/* <button onClick={() => dispatch({ type: "decrement" })}>-</button> */}
-        {/* <button onClick={() => dispatch({ type: "increment" })}>+</button> */}
         <CounterDownButton countDown={() => dispatch({ type: "decrement" })} />
         <CounterUpButton countUp={() => dispatch({ type: "increment" })} />
       </>
