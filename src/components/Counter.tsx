@@ -1,13 +1,7 @@
-import React, {
-  Dispatch,
-  useContext,
-  useMemo,
-  useReducer,
-  useState,
-} from "react";
+import React, { useContext } from "react";
 import { CounterDownButton } from "./CounterDownButton";
 import { CounterUpButton } from "./CounterUpButton";
-import { Actions, CountReducer } from "./CountReducer";
+import { Actions } from "./CountReducer";
 import { CountContext } from "./CounterContext";
 
 // カウント表示（可変部分)とカウンターボタン(固定部分)にコンポートを分割
@@ -17,8 +11,6 @@ export const Count = () => {
   const { count } = useContext(CountContext);
   return <div>{count}</div>;
 };
-
-// type CounterDispatch = Dispatch<Actions>;
 
 export const CountButtonArea = () => {
   //const [count, setCount] = useState(0);
