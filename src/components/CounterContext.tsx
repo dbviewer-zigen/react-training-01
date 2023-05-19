@@ -1,40 +1,33 @@
 import { createContext, useReducer, useState } from "react";
-import { Actions, CountReducer } from "./CountReducer";
+import { Actions, CountReducer, State } from "./CountReducer";
 
-// コンテキストの作成(引数はデフォルトの値および関数)
-// この方法(dispathを使わない)では、ステートを変更する関数が増えると引数が増える
-// <CountContext.Provider>のvalue属性に関数を追加していく必要がある
-// const CountContext = createContext({
-//   count: 0,
-//   dispatch: {},
-// });
+// --------------------------------------
+// 再描画防止
+// ContextのStateとDispathを分割する
+// --------------------------------------
+export const CountStateContext = createContext<State>({} as State);
 
-type CounterContextType = {
-  count: number;
-  dispatch: React.Dispatch<Actions>;
-};
-
-export const CountContext = createContext<CounterContextType>(
-  {} as CounterContextType
+export const CountDispachContext = createContext<React.Dispatch<Actions>>(
+  {} as React.Dispatch<Actions>
 );
 
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-// const CountProvider = ({ children }: Props): JSX.Element => {
 export const CountProvider = ({ children }: Props) => {
-  const [count, dispatch] = useReducer(CountReducer, 0);
+  const initialState = {
+    count: 0,
+  };
+
+  const [state, dispatch] = useReducer(CountReducer, initialState);
 
   return (
-    <CountContext.Provider
-      value={{
-        count,
-        dispatch,
-      }}
-    >
-      {children}
-    </CountContext.Provider>
+    <CountStateContext.Provider value={state}>
+      <CountDispachContext.Provider value={dispatch}>
+        {children}
+      </CountDispachContext.Provider>
+    </CountStateContext.Provider>
   );
 };
 

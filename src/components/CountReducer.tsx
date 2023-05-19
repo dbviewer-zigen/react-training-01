@@ -1,12 +1,16 @@
+export type State = {
+  count: number;
+};
+
 export type Actions = { type: "increment" } | { type: "decrement" };
 
-export const CountReducer = (counter: number, actions: Actions): number => {
+export const CountReducer = (state: State, actions: Actions): State => {
   switch (actions.type) {
     case "increment": {
-      return counter + 1;
+      return { count: state.count + 1 };
     }
     case "decrement": {
-      return counter - 1;
+      return { count: state.count - 1 };
     }
   }
 };

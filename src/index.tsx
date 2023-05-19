@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { Count, Counter } from "./components/Counter";
+import { Count, CountButtonArea } from "./components/Counter";
 import { CountProvider } from "./components/CounterContext";
 
 const root = ReactDOM.createRoot(
@@ -14,7 +14,7 @@ root.render(
     {/* <App /> */}
     <CountProvider>
       <Count />
-      <Counter />
+      <CountButtonArea />
     </CountProvider>
   </React.StrictMode>
 );
