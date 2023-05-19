@@ -12,7 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     {/* <App /> */}
-    <h4>step04_メモ化による再描画防止 ReactMemo利用編</h4>
+    <h4>step06_メモ化による再描画防止 useMemo利用編</h4>
     <CountProvider>
       <Count />
       <CountButtonArea />
