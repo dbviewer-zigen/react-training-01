@@ -11,15 +11,16 @@ export type Todo = {
 // Todoリストを一覧で表示するサンプル
 export const TodoListPage = () => {
   // const todos = [
-  //   { id: "aaa", content: "aaa", isDone: false },
-  //   { id: "bbb", content: "bbb", isDone: true },
-  //   { id: "ccc", content: "ccc", isDone: false },
-  //   { id: "ddd", content: "ddd", isDone: false },
-  //   { id: "eee", content: "eee", isDone: false },
-  //   { id: "fff", content: "fff", isDone: false },
-  //   { id: "ggg", content: "ggg", isDone: false },
-  // ];
+  //   { id: "aaa", title: "aaa", completed: false, userId: "user01" },
+  //   { id: "bbb", title: "bbb", completed: true, userId: "user01" },
+  //   { id: "ccc", title: "ccc", completed: false, userId: "user01" },
+  //   { id: "ddd", title: "ddd", completed: false, userId: "user01" },
+  //   { id: "eee", title: "eee", completed: false, userId: "user01" },
+  //   { id: "fff", title: "fff", completed: false, userId: "user01" },
+  //   { id: "ggg", title: "ggg", completed: false, userId: "user01" },
+  // ] as Todo[]; // 型を設定する
 
+  // urlを指定してAPIサーバからTodo[]を取得する
   const url = "https://jsonplaceholder.typicode.com/todos";
   const { data, isLoading, error } = useFetch<Todo[]>(url); // 型を指定する
 
