@@ -2,22 +2,22 @@ import React, { useState } from "react";
 
 export type Todo = {
   id: string;
-  content: string;
-  done: boolean;
-  name: string;
+  title: string;
+  completed: boolean;
+  userId: string;
 };
 
 // Todoリストを一覧で表示するサンプル
 export const TodoListPage = () => {
   const todos = [
-    { id: "aaa", content: "aaa", isDone: false },
-    { id: "bbb", content: "bbb", isDone: true },
-    { id: "ccc", content: "ccc", isDone: false },
-    { id: "ddd", content: "ddd", isDone: false },
-    { id: "eee", content: "eee", isDone: false },
-    { id: "fff", content: "fff", isDone: false },
-    { id: "ggg", content: "ggg", isDone: false },
-  ];
+    { id: "aaa", title: "aaa", completed: false, userId: "user01" },
+    { id: "bbb", title: "bbb", completed: true, userId: "user01" },
+    { id: "ccc", title: "ccc", completed: false, userId: "user01" },
+    { id: "ddd", title: "ddd", completed: false, userId: "user01" },
+    { id: "eee", title: "eee", completed: false, userId: "user01" },
+    { id: "fff", title: "fff", completed: false, userId: "user01" },
+    { id: "ggg", title: "ggg", completed: false, userId: "user01" },
+  ] as Todo[]; // 型を設定する
 
   // todos.mapを使って繰り返し処理を行う
   //  - 子要素のkey属性に一意の値を格納する　key={todo.id}
@@ -26,7 +26,7 @@ export const TodoListPage = () => {
       <ul>
         {todos.map((todo, index) => (
           <li key={todo.id}>
-            {todo.content} {todo.isDone ? "(完了)" : ""}
+            {todo.title} {todo.completed ? "(完了)" : ""}
           </li>
         ))}
       </ul>
