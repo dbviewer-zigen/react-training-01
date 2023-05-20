@@ -21,7 +21,7 @@ export const TodoListPage = () => {
   // ];
 
   const url = "https://jsonplaceholder.typicode.com/todos";
-  const { data, isLoading, error } = useFetch<Todo[]>(url);
+  const { data, isLoading, error } = useFetch<Todo[]>(url); // 型を指定する
 
   if (isLoading) {
     return <h4>Loading...</h4>;
@@ -36,6 +36,8 @@ export const TodoListPage = () => {
       </>
     );
   }
+
+  console.log("render todo list");
 
   // todos.mapを使って繰り返し処理を行う
   //  - 子要素のkey属性に一意の値を格納する　key={todo.id}

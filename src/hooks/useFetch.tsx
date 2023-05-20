@@ -6,6 +6,8 @@ export const useFetch = <T,>(url: string) => {
   const [error, setError] = useState<unknown>(null);
   const [data, setData] = useState<T>(null as T);
 
+  // StrictMode有効時にuseEffectが2回実行される(開発環境のみ)
+  // https://qiita.com/asahina820/items/665c55594cfd55e6f14a
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -22,8 +24,11 @@ export const useFetch = <T,>(url: string) => {
         }
       }
     };
+
+    console.log("start fetch");
     // データをフェッチする
     fetchData();
+    console.log("end fetch");
   }, [url]);
 
   return { data, isLoading, error };
