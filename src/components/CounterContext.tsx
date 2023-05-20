@@ -1,4 +1,4 @@
-import { createContext, useReducer, useState } from "react";
+import { ReactNode, createContext, useReducer, useState } from "react";
 import { Actions, CountReducer, State } from "./CountReducer";
 
 // --------------------------------------
@@ -15,6 +15,7 @@ interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
+//export const CountProvider = ({ children }: { children: ReactNode }) => {
 export const CountProvider = ({ children }: Props) => {
   const initialState = {
     count: 0,
