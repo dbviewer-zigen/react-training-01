@@ -11,6 +11,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <h4>step05_メモ化による再描画防止Context分割</h4>
     {/* <App /> */}
     <CountProvider>
       <Count />
