@@ -10,6 +10,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
+    <h4>step02_useStateによるカウンタ機能</h4>
     {/* <App /> */}
     <Counter />
   </React.StrictMode>
