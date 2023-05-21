@@ -30,7 +30,7 @@ export const TodoListPage = () => {
   function handleAddFormSubmit(currentTodo: Todo): void {
     //  e.preventDefault(); // submitのデフォルト動作を止める(submitさせない)
     add(currentTodo.title, "testUser001");
-    setCurrentTodo(emptyTodo); // 入力フィールドをクリアする
+    // setCurrentTodo(emptyTodo); // 入力フィールドをクリアする　<-- TodoForm.tsx側でリセットしている
   }
 
   // 更新用Submitボタン押下時の処理
@@ -39,7 +39,7 @@ export const TodoListPage = () => {
     // e.preventDefault(); // submitのデフォルト動作を止める(submitさせない)
     console.log("選択されているTodo ", currentTodo);
     update(currentTodo.id, currentTodo.title);
-    setCurrentTodo(emptyTodo); // 入力フィールドをクリアする
+    // setCurrentTodo(emptyTodo); // 入力フィールドをクリアする　<-- 非編集モードになるためクリアは不要
     setEditMode(false);
   }
 

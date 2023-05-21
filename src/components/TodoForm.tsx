@@ -1,4 +1,4 @@
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { Todo } from "../types/Todo";
 import { useForm } from "react-hook-form";
 
@@ -9,6 +9,8 @@ export type FormValues = {
   title: string;
 };
 
+// step13_TODOリストのreact-hook-form化_パート２
+// useFormのresetFieldを使って登録処理後に入力フォームの値を初期化する
 export const TodoForm = ({
   handleAddFormSubmit,
 }: {
@@ -18,6 +20,9 @@ export const TodoForm = ({
     register,
     handleSubmit,
     formState: { errors },
+    // setValue,
+    // getValues,
+    resetField, // 指定したフォームの値を初期化
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
@@ -28,6 +33,7 @@ export const TodoForm = ({
       userId: "test",
     };
     handleAddFormSubmit(newTodo);
+    resetField("title"); // 指定したフォームの値を初期化
   };
   console.log("render TodoForm");
   return (

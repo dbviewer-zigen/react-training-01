@@ -17,18 +17,6 @@
       "title": "テストメッセージ３",
       "completed": false,
       "userId": "user03"
-    },
-    {
-      "id": "01H103KFSY565VC91MJ1EEFKAK",
-      "title": "AAAAA",
-      "completed": false,
-      "userId": "testUser001"
-    },
-    {
-      "id": "01H103Y5XYBRJZPTFHHGV4FJFE",
-      "title": "テストメッセージ１",
-      "completed": false,
-      "userId": "testUser001"
     }
   ]
 }
