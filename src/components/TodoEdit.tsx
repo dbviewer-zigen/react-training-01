@@ -1,7 +1,8 @@
 import { useState, FormEvent, useEffect } from "react";
 import { Todo } from "../types/Todo";
+import { FormValues } from "./TodoForm";
 //import { useTodosDispatch } from "./TodosContext";
-
+import { useForm } from "react-hook-form";
 export const TodoEdit = ({
   todo,
   handleEditFormSubmit,
@@ -21,30 +22,42 @@ export const TodoEdit = ({
     setValue(todo.title);
   }, [todo]); // todoが変わった時に、setValueを実行する
 
-  const onSubmit = (e: FormEvent) => {
-    // const onSubmit = (e: any) => {
-    e.preventDefault();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
 
+  const onSubmit = (data: FormValues) => {
     const newTodo: Todo = {
       id: todo.id,
       title: value,
       completed: false,
       userId: "test",
     };
-
-    console.log("ここまできた ", newTodo);
-
     handleEditFormSubmit(newTodo);
     setValue("");
   };
+
   console.log("render TodoEdit todo.title:", todo.title);
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <input
+        type="text"
         value={value}
-        placeholder="やることを入力してくださいー"
-        onChange={(e) => setValue(e.target.value)}
+        placeholder="Todo"
+        {...register("title", {
+          required: "タイトルは必須です",
+          maxLength: 120,
+          onChange: (e) => {
+            // 修正する場合は、onChangeでsetValueする
+            // react-hook-formを使う場合は、onChangeの場所が違うことに注意する
+            setValue(e.target.value);
+          },
+        })}
       />
+      <div>{errors.title && errors.title.message}</div>
       <button type="submit">更新</button>
       <button onClick={handleCancelFormSubmit}>キャンセル</button>
     </form>

@@ -1,38 +1,46 @@
 import { useState, FormEvent } from "react";
 import { Todo } from "../types/Todo";
-//import { useTodosDispatch } from "./TodosContext";
+import { useForm } from "react-hook-form";
+
+// react-hook-formをtypescriptで実装する場合
+// useFormで型を指定する。
+// 入力フィールドの名称、データ型を指定しないと、エラーメッセージの表示ができない。
+export type FormValues = {
+  title: string;
+};
 
 export const TodoForm = ({
   handleAddFormSubmit,
 }: {
   handleAddFormSubmit: (todo: Todo) => void;
 }) => {
-  const [value, setValue] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormValues>();
 
-  const onSubmit = (e: FormEvent) => {
-    // const onSubmit = (e: any) => {
-    e.preventDefault();
-
+  const onSubmit = (data: FormValues) => {
     const newTodo: Todo = {
       id: "",
-      title: value,
+      title: data.title,
       completed: false,
       userId: "test",
     };
-
-    console.log("登録するデータ ", newTodo);
-
     handleAddFormSubmit(newTodo);
-    setValue("");
   };
-  console.log("render TodoForm");
+
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <input
-        value={value}
-        placeholder="やることを入力してくださいー"
-        onChange={(e) => setValue(e.target.value)}
+        type="text"
+        placeholder="Todo"
+        {...register("title", {
+          required: "タイトルは必須です",
+          maxLength: 120,
+        })}
       />
+      <div>{errors.title && errors.title.message}</div>
       <button type="submit">登録</button>
     </form>
   );
