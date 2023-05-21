@@ -6,7 +6,7 @@ export const TodoListPage = () => {
   // カスタムフックから必要な変数を取得
   // useTodoというカスタムフックを宣言
   // 第一引数はステート、第二引数以降はステートを更新するための各種関数
-  const { todoList } = useTodo();
+  const { todoList, add, update, remove } = useTodo();
 
   console.log("render todo list");
   return (
@@ -15,6 +15,7 @@ export const TodoListPage = () => {
         {todoList.map((todo, index) => (
           <li key={todo.id}>
             {todo.title} {todo.completed ? "(完了)" : ""}
+            <button onClick={() => remove(todo.id)}>削除</button>
           </li>
         ))}
       </ul>
