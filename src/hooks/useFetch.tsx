@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // export const useFetch = <T,>({ url, config }: { url: string; config: any }) => {
 export const useFetch = <T,>(url: string) => {
