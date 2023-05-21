@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { useTodo } from "../hooks/useTodo";
 import { Todo } from "../types/Todo";
+import { TodoList } from "../components/TodoList";
+import { TodoForm } from "../components/TodoForm";
+import { TodoEdit } from "../components/TodoEdit";
 
 // Todoリストを一覧表示、および登録、更新、削除するサンプル
 // - 既知の問題
@@ -23,21 +26,32 @@ export const TodoListPage = () => {
   const [currentTodo, setCurrentTodo] = useState(emptyTodo);
 
   // 登録用Submitボタン押下時の処理
-  function handleAddFormSubmit(e: any): void {
-    e.preventDefault(); // submitのデフォルト動作を止める(submitさせない)
+  //function handleAddFormSubmit(e: any): void {
+  function handleAddFormSubmit(currentTodo: Todo): void {
+    //  e.preventDefault(); // submitのデフォルト動作を止める(submitさせない)
     add(currentTodo.title, "testUser001");
     setCurrentTodo(emptyTodo); // 入力フィールドをクリアする
   }
+
   // 更新用Submitボタン押下時の処理
-  function handleEditFormSubmit(e: any): void {
-    e.preventDefault(); // submitのデフォルト動作を止める(submitさせない)
+  //function handleEditFormSubmit(e: any): void {
+  function handleEditFormSubmit(currentTodo: Todo): void {
+    // e.preventDefault(); // submitのデフォルト動作を止める(submitさせない)
+    console.log("選択されているTodo ", currentTodo);
     update(currentTodo.id, currentTodo.title);
-    setCurrentTodo(emptyTodo);
-    setEditMode(false); // 入力フィールドをクリアする
+    setCurrentTodo(emptyTodo); // 入力フィールドをクリアする
+    setEditMode(false);
+  }
+
+  // 更新用Submitボタン押下時の処理
+  function handleCancelFormSubmit(): void {
+    setCurrentTodo(emptyTodo); // 入力フィールドをクリアする
+    setEditMode(false);
   }
 
   // Todoアイテム毎にある編集ボタン押下時の処理
   function handleEditClick(todo: Todo): void {
+    console.log("編集ボタンをクリック title:", todo.title);
     setEditMode(true); // 編集モードにする
     setCurrentTodo(todo); //  現在（選択中）のTodoを設定する
   }
@@ -47,31 +61,31 @@ export const TodoListPage = () => {
     remove(todo.id); // Todoアイテムを削除する
   }
 
-  // 通常モード(非編集）の入力フィールドの値が変更時の処理
-  function handleAddInputChange(e: any): void {
-    // const newItem: Todo = {
-    //   id: "",
-    //   title: e.target.value,
-    //   completed: false,
-    //   userId: "",
-    // };
-    // setCurrentTodo(newItem);
-    // 上記の書き方もできるが、emptyTodoをスプレット展開して、タイトルだけ上書きする方がシンプル
-    setCurrentTodo({ ...emptyTodo, title: e.target.value });
-  }
+  // // 通常モード(非編集）の入力フィールドの値が変更時の処理
+  // function handleAddInputChange(e: any): void {
+  //   // const newItem: Todo = {
+  //   //   id: "",
+  //   //   title: e.target.value,
+  //   //   completed: false,
+  //   //   userId: "",
+  //   // };
+  //   // setCurrentTodo(newItem);
+  //   // 上記の書き方もできるが、emptyTodoをスプレット展開して、タイトルだけ上書きする方がシンプル
+  //   setCurrentTodo({ ...emptyTodo, title: e.target.value });
+  // }
 
-  // 編集モードの入力フィールドの値が変更時の処理
-  function handleEditInputChange(e: any): void {
-    setCurrentTodo({ ...currentTodo, title: e.target.value }); // タイトルだけ更新する
-  }
+  // // 編集モードの入力フィールドの値が変更時の処理
+  // function handleEditInputChange(e: any): void {
+  //   setCurrentTodo({ ...currentTodo, title: e.target.value }); // タイトルだけ更新する
+  // }
 
-  console.log("render todo list");
+  console.log("render TodoListPage editMode:", editMode);
 
   if (!editMode) {
     // 編集モードでない場合の表示
     return (
       <div>
-        <form onSubmit={handleAddFormSubmit}>
+        {/* <form onSubmit={handleAddFormSubmit}>
           <h2>TOODリスト</h2>
           <label htmlFor="todo">Add todo: </label>
           <input
@@ -82,23 +96,20 @@ export const TodoListPage = () => {
             onChange={handleAddInputChange}
           />
           <button type="submit">登録</button>
-        </form>
-        <ul>
-          {todoList.map((todo, index) => (
-            <li key={todo.id}>
-              {todo.title} {todo.completed ? "(完了)" : ""}
-              <button onClick={() => handleEditClick(todo)}>編集</button>
-              <button onClick={() => handleDeleteClick(todo)}>削除</button>
-            </li>
-          ))}
-        </ul>
+        </form> */}
+        <TodoForm handleAddFormSubmit={handleAddFormSubmit} />
+        <TodoList
+          todoList={todoList}
+          handleEditClick={handleEditClick}
+          handleDeleteClick={handleDeleteClick}
+        />
       </div>
     );
   } else {
     // 編集モード場合の表示
     return (
       <div>
-        <form onSubmit={handleEditFormSubmit}>
+        {/* <form onSubmit={handleEditFormSubmit}>
           <h2>TOODリスト(編集モード)</h2>
           <label htmlFor="editTodo">Edit todo: </label>
           <input
@@ -110,16 +121,18 @@ export const TodoListPage = () => {
           />
           <button type="submit">更新</button>
           <button onClick={() => setEditMode(false)}>キャンセル</button>
-        </form>
-        <ul>
-          {todoList.map((todo, index) => (
-            <li key={todo.id}>
-              {todo.title} {todo.completed ? "(完了)" : ""}
-              <button onClick={() => handleEditClick(todo)}>編集</button>
-              <button onClick={() => handleDeleteClick(todo)}>削除</button>
-            </li>
-          ))}
-        </ul>
+        </form> */}
+        <TodoEdit
+          todo={currentTodo}
+          handleEditFormSubmit={handleEditFormSubmit}
+          handleCancelFormSubmit={handleCancelFormSubmit}
+        />
+
+        <TodoList
+          todoList={todoList}
+          handleEditClick={handleEditClick}
+          handleDeleteClick={handleDeleteClick}
+        />
       </div>
     );
   }
