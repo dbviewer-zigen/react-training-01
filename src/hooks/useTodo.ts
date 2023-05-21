@@ -38,7 +38,10 @@ export const useTodo = () => {
       // --------------------------------
       // addTodoをtodoListの先頭に追加、その後todoListを展開
       // ...はスプレット演算子(オブジェクトの展開)
-      setTodoList([addTodo, ...todoList]);
+      //setTodoList([addTodo, ...todoList]);
+
+      // addTodoをtodoListの最後に追加場合
+      setTodoList([...todoList, addTodo]);
     });
   };
 
