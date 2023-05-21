@@ -4,11 +4,14 @@
 
 React を実行(npm stat)する前に、json-server を起動する必要があります。
 
+react-hook-form を使い、必須チェック、桁数チェックを実装
+
 ## このサンプルに必要なライブラリ
 
 ```
 $ npm install ulid
 $ npm install axios
+$ npm install react-hook-form
 ```
 
 ## json-server を起動方法
