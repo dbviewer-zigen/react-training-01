@@ -29,7 +29,7 @@ export const TodoForm = ({
     };
     handleAddFormSubmit(newTodo);
   };
-
+  console.log("render TodoForm");
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
@@ -37,7 +37,11 @@ export const TodoForm = ({
         placeholder="Todo"
         {...register("title", {
           required: "タイトルは必須です",
-          maxLength: 120,
+          // maxLength: 5,
+          maxLength: {
+            value: 10,
+            message: "10文字以内で入力してください",
+          },
         })}
       />
       <div>{errors.title && errors.title.message}</div>

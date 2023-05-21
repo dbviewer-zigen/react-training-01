@@ -49,7 +49,11 @@ export const TodoEdit = ({
         placeholder="Todo"
         {...register("title", {
           required: "タイトルは必須です",
-          maxLength: 120,
+          // maxLength: 120,
+          maxLength: {
+            value: 10,
+            message: "10文字以内で入力してください",
+          },
           onChange: (e) => {
             // 修正する場合は、onChangeでsetValueする
             // react-hook-formを使う場合は、onChangeの場所が違うことに注意する
