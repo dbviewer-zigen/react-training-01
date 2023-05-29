@@ -12,7 +12,7 @@ export const TodoListPage = () => {
   // カスタムフックから必要な変数を取得
   // useTodoというカスタムフックを宣言
   // 第一引数はステート、第二引数以降はステートを更新するための各種関数
-  const { todoList, add, update, remove } = useTodo();
+  const { todoList, add, update, remove, toggleStatus } = useTodo();
 
   const [editMode, setEditMode] = useState(false);
 
@@ -61,6 +61,11 @@ export const TodoListPage = () => {
     remove(todo.id); // Todoアイテムを削除する
   }
 
+  // Todoアイテム毎にあるチェックボタン押下時の処理
+  function handleToggleStatus(todo: Todo): void {
+    toggleStatus(todo.id, todo.completed); // Todoアイテムを削除する
+  }
+
   // // 通常モード(非編集）の入力フィールドの値が変更時の処理
   // function handleAddInputChange(e: any): void {
   //   // const newItem: Todo = {
@@ -102,6 +107,7 @@ export const TodoListPage = () => {
           todoList={todoList}
           handleEditClick={handleEditClick}
           handleDeleteClick={handleDeleteClick}
+          handleToggleClick={handleToggleStatus}
         />
       </div>
     );
@@ -132,6 +138,7 @@ export const TodoListPage = () => {
           todoList={todoList}
           handleEditClick={handleEditClick}
           handleDeleteClick={handleDeleteClick}
+          handleToggleClick={handleToggleStatus}
         />
       </div>
     );

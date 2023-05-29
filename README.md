@@ -12,6 +12,26 @@ react-hook-form を使い、必須チェック、桁数チェックを実装
 $ npm install ulid
 $ npm install axios
 $ npm install react-hook-form
+$ npm install @chakra-ui/react @emotion/react @emotion/styled framer-motion
+$ npm install react-icons
+```
+
+## index.tsx に ChakraProvider を入れる
+
+```
+import { ChakraProvider } from "@chakra-ui/react";
+
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+root.render(
+  // <React.StrictMode>
+  <ChakraProvider>
+    <TodoListPage />
+  </ChakraProvider>
+
+  // </React.StrictMode>
+);
 ```
 
 ## json-server を起動方法

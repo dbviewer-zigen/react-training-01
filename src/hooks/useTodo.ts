@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import * as todoApi from "../apis/todos";
 import { Todo } from "../types/Todo";
 import { ulid } from "ulid";
+import { addAbortSignal } from "stream";
 // Environmental requirements
 // - install ulid, axios
 // カスタムHook
@@ -76,6 +77,26 @@ export const useTodo = () => {
     });
   };
 
+  // IDを指定してcompleted(toggle)を切り替える
+  const toggleStatus = (id: string, completed: boolean) => {
+    // todoListから、idが一致する1件を取り出す
+    const todoItem = todoList.find((item: Todo) => item.id === id);
+    // タイトルを上書きする
+    const updateItem: Todo = { ...todoItem!, completed: !completed };
+    // サーバに更新API呼ぶ
+    todoApi.update(id, updateItem).then((updatedTodo) => {
+      // 更新が成功したら、todoListを更新する
+      // 保持しているtodoListからidが一致しているTodoをサーバーから返ってきたupdatedTodoで更新する
+      const newTodoList = todoList.map((item) =>
+        item.id !== id ? item : updatedTodo
+      );
+      // --------------------------------
+      // 新しいtodoListをstateにセットする
+      // --------------------------------
+      setTodoList(newTodoList);
+    });
+  };
+
   // 作成した関数を返す
   // 第一引数:ステート
   // 第二引数以降:ステートを更新するための関数
@@ -84,5 +105,6 @@ export const useTodo = () => {
     add,
     update,
     remove,
+    toggleStatus, // completed(toggle)更新用の関数を追加
   };
 };
