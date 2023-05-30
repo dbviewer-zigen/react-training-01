@@ -9,35 +9,42 @@ import { FormErrorMessage, FormLabel, FormControl } from "@chakra-ui/react";
 // 入力フィールドの名称、データ型を指定しないと、エラーメッセージの表示ができない。
 export type FormValues = {
   title: string;
+  startDate: string;
+  endDate: string;
 };
 
-// step13_TODOリストのreact-hook-form化_パート２
-// useFormのresetFieldを使って登録処理後に入力フォームの値を初期化する
 export const TodoForm = ({
   handleAddFormSubmit,
 }: {
   handleAddFormSubmit: (todo: Todo) => void;
 }) => {
+  // 指定した日付の文字列(yyyy-MM-dd)を取得する
+  const getDateString = (date: Date): string => {
+    // const date2 = date.setDate(date.getDate() + 1);
+    const year = date.getFullYear().toString().padStart(4, "0");
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    return year + "-" + month + "-" + day;
+  };
+
+  console.log(getDateString(new Date()));
+
   const {
     register,
     handleSubmit,
     // formState: { errors },
     formState: { errors, isSubmitting },
-    // setValue,
-    // getValues,
+    // setValue,　// フォームに値を設定する関数
+    getValues, // フォームの値を取得する関数
     resetField, // 指定したフォームの値を初期化
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({
+    defaultValues: {
+      title: "初期値",
+      startDate: getDateString(new Date()),
+      endDate: getDateString(new Date()),
+    },
+  });
 
-  // const onSubmit = (data: FormValues) => {
-  //   const newTodo: Todo = {
-  //     id: "",
-  //     title: data.title,
-  //     completed: false,
-  //     userId: "test",
-  //   };
-  //   handleAddFormSubmit(newTodo);
-  //   resetField("title"); // 指定したフォームの値を初期化
-  // };
   const onSubmit = handleSubmit((data: FormValues) => {
     const newTodo: Todo = {
       id: "",
@@ -48,24 +55,28 @@ export const TodoForm = ({
     handleAddFormSubmit(newTodo);
     resetField("title"); // 指定したフォームの値を初期化
   });
+
+  // Vadidate関数
+  const validateName = (name: string) => {
+    console.log("name-->", name);
+    if (name === "inValid") return "This name is not validate";
+    console.log("startDate:", getValues("startDate"));
+    console.log("endDate:", getValues("endDate"));
+  };
+
+  const validatePeriodDate = (date: string) => {
+    // console.log("date-->", date);
+    // Formの値をgetValuesで取得して、項目間のチェックを行う
+    const _startDate = getValues("startDate");
+    const _endDate = getValues("endDate");
+    console.log("startDate:", _startDate);
+    console.log("endDate:", _endDate);
+    if (_endDate < _startDate) return "開始日 <= 終了日で設定してください。";
+  };
+
   console.log("render TodoForm");
+  console.log(errors.endDate);
   return (
-    // <form onSubmit={handleSubmit(onSubmit)}>
-    //   <input
-    //     type="text"
-    //     placeholder="Todo"
-    //     {...register("title", {
-    //       required: "タイトルは必須です",
-    //       // maxLength: 5,
-    //       maxLength: {
-    //         value: 10,
-    //         message: "10文字以内で入力してください",
-    //       },
-    //     })}
-    //   />
-    //   <div>{errors.title && errors.title.message}</div>
-    //   <button type="submit">登録</button>
-    // </form>
     <Box display="flex" justifyContent="center" mt={4}>
       <form onSubmit={onSubmit}>
         <FormControl
@@ -79,12 +90,47 @@ export const TodoForm = ({
             placeholder="Enter todo"
             {...register("title", {
               required: "必須入力です",
-              minLength: { value: 4, message: "4文字以上で入力してください" },
+              minLength: { value: 1, message: "1文字以上で入力してください" },
               maxLength: { value: 10, message: "10文字以内で入力してください" },
+              validate: validateName,
             })}
           />
           <FormErrorMessage>
             {errors.title && errors.title.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          isInvalid={errors.startDate ? true : undefined}
+          w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "60vw" }}
+        >
+          <FormLabel mt={4}>開始日</FormLabel>
+          <Input
+            {...register("startDate", {
+              required: "必須入力です",
+              validate: validatePeriodDate,
+            })}
+            type={"date"}
+          />
+          <FormErrorMessage>
+            {errors.startDate && errors.startDate.message}
+          </FormErrorMessage>
+        </FormControl>
+
+        <FormControl
+          isInvalid={errors.endDate ? true : undefined}
+          w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "60vw" }}
+        >
+          <FormLabel mt={4}>終了日</FormLabel>
+          <Input
+            {...register("endDate", {
+              required: "必須入力です",
+              validate: validatePeriodDate,
+            })}
+            type={"date"}
+          />
+          <FormErrorMessage>
+            {errors.endDate && errors.endDate.message}
           </FormErrorMessage>
         </FormControl>
 
