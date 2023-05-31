@@ -58,6 +58,7 @@ export const TodoList = ({
         justifyContent="flex-end"
         p={4}
       >
+        {/* 並び替えボタン */}
         <Button ml={4} colorScheme="teal" onClick={() => sortByTitle(true)}>
           並び替え(降順)
         </Button>
