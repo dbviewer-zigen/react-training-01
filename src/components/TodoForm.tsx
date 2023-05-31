@@ -64,16 +64,6 @@ export const TodoForm = ({
     console.log("endDate:", getValues("endDate"));
   };
 
-  const validatePeriodDate = (date: string) => {
-    // console.log("date-->", date);
-    // Formの値をgetValuesで取得して、項目間のチェックを行う
-    const _startDate = getValues("startDate");
-    const _endDate = getValues("endDate");
-    console.log("startDate:", _startDate);
-    console.log("endDate:", _endDate);
-    if (_endDate < _startDate) return "開始日 <= 終了日で設定してください。";
-  };
-
   console.log("render TodoForm");
   console.log(errors.endDate);
   return (
@@ -97,40 +87,6 @@ export const TodoForm = ({
           />
           <FormErrorMessage>
             {errors.title && errors.title.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl
-          isInvalid={errors.startDate ? true : undefined}
-          w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "60vw" }}
-        >
-          <FormLabel mt={4}>開始日</FormLabel>
-          <Input
-            {...register("startDate", {
-              required: "必須入力です",
-              validate: validatePeriodDate,
-            })}
-            type={"date"}
-          />
-          <FormErrorMessage>
-            {errors.startDate && errors.startDate.message}
-          </FormErrorMessage>
-        </FormControl>
-
-        <FormControl
-          isInvalid={errors.endDate ? true : undefined}
-          w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "60vw" }}
-        >
-          <FormLabel mt={4}>終了日</FormLabel>
-          <Input
-            {...register("endDate", {
-              required: "必須入力です",
-              validate: validatePeriodDate,
-            })}
-            type={"date"}
-          />
-          <FormErrorMessage>
-            {errors.endDate && errors.endDate.message}
           </FormErrorMessage>
         </FormControl>
 

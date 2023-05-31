@@ -7,6 +7,8 @@ import {
   VStack,
   StackDivider,
   Text,
+  Box,
+  Button,
 } from "@chakra-ui/react";
 import { TodoItem } from "./TodoItem";
 export const TodoList = ({
@@ -26,24 +28,43 @@ export const TodoList = ({
   //   setList(todoList);
   // }, []);
 
+  // クライアント側でソート結果を持つケース
+  const [sortedTodoList, setSortedTodoList] = useState<Todo[]>(todoList);
+
+  useEffect(() => {
+    setSortedTodoList(todoList);
+  }, [todoList]);
+
+  const sortByTitle = (isDesc: boolean) => {
+    var clonedList = Array.from(sortedTodoList);
+    if (isDesc) {
+      clonedList.sort((a, b) => (a.title < b.title ? 1 : -1));
+    } else {
+      clonedList.sort((a, b) => (a.title < b.title ? -1 : 1));
+    }
+    setSortedTodoList(clonedList);
+  };
+
   console.log("render TodoList");
   return (
-    // <div>
-    //   <ul>
-    //     {todoList.map((todo, index) => (
-    //       <li key={todo.id}>
-    //         {todo.title} {todo.completed ? "(完了)" : ""}
-    //         <button onClick={() => handleEditClick(todo)}>編集</button>
-    //         <button onClick={() => handleDeleteClick(todo)}>削除</button>
-    //       </li>
-    //     ))}
-    //   </ul>
-    // </div>
     <Flex flexDir="column" align="center">
       <Center mb={8}>
         {/*margin_bottom 32px*/}
         <Heading>Todo List</Heading>
       </Center>
+      <Box
+        w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "60vw" }}
+        display="flex"
+        justifyContent="flex-end"
+        p={4}
+      >
+        <Button ml={4} colorScheme="teal" onClick={() => sortByTitle(true)}>
+          並び替え(降順)
+        </Button>
+        <Button ml={4} colorScheme="teal" onClick={() => sortByTitle(false)}>
+          並び替え(昇順)
+        </Button>
+      </Box>
       <VStack
         divider={<StackDivider borderColor="gray.200" />}
         align="stretch"
@@ -55,10 +76,12 @@ export const TodoList = ({
         maxH="65vw"
         overflow="scroll"
       >
-        {todoList.length === 0 ? (
+        {/* {todoList.length === 0 ? ( */}
+        {sortedTodoList.length === 0 ? (
           <Text>No Data</Text>
         ) : (
-          todoList.map((todo) => (
+          // todoList.map((todo) => (
+          sortedTodoList.map((todo) => (
             <TodoItem
               key={todo.id}
               todo={todo}
