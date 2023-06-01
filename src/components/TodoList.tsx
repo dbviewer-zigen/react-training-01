@@ -10,7 +10,22 @@ import {
   Box,
   Button,
 } from "@chakra-ui/react";
+
 import { TodoItem } from "./TodoItem";
+
+//function sort(sortedTodoList: Todo[], isDesc: boolean): Todo[] {
+// const sort = function (sortedTodoList: Todo[], isDesc: boolean): Todo[] {
+const sort = (sortedTodoList: Todo[], isDesc: boolean): Todo[] => {
+  console.log("sortが呼ばれました");
+  var clonedList = Array.from(sortedTodoList);
+  if (isDesc) {
+    clonedList.sort((a, b) => (a.title < b.title ? 1 : -1));
+  } else {
+    clonedList.sort((a, b) => (a.title < b.title ? -1 : 1));
+  }
+  return clonedList;
+};
+
 export const TodoList = ({
   todoList,
   handleEditClick,
@@ -36,13 +51,7 @@ export const TodoList = ({
   }, [todoList]);
 
   const sortByTitle = (isDesc: boolean) => {
-    var clonedList = Array.from(sortedTodoList);
-    if (isDesc) {
-      clonedList.sort((a, b) => (a.title < b.title ? 1 : -1));
-    } else {
-      clonedList.sort((a, b) => (a.title < b.title ? -1 : 1));
-    }
-    setSortedTodoList(clonedList);
+    setSortedTodoList(sort(sortedTodoList, isDesc));
   };
 
   console.log("render TodoList");
