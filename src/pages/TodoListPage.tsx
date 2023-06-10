@@ -4,6 +4,8 @@ import { Todo } from "../types/Todo";
 import { TodoList } from "../components/TodoList";
 import { TodoForm } from "../components/TodoForm";
 import { TodoEdit } from "../components/TodoEdit";
+import { ScrollToTop } from "../buttons/ScrollTop";
+import { FloatingActionButton } from "../buttons/FloatingActionButton";
 
 // Todoリストを一覧表示、および登録、更新、削除するサンプル
 // - 既知の問題
@@ -109,6 +111,8 @@ export const TodoListPage = () => {
           handleDeleteClick={handleDeleteClick}
           handleToggleClick={handleToggleStatus}
         />
+        {/* <ScrollToTop></ScrollToTop> */}
+        <FloatingActionButton></FloatingActionButton>
       </div>
     );
   } else {
