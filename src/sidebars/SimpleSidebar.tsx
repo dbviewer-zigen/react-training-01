@@ -18,6 +18,9 @@ import {
   DrawerHeader,
   DrawerBody,
   Button,
+  InputGroup,
+  InputLeftElement,
+  Input,
 } from "@chakra-ui/react";
 import {
   FiHome,
@@ -30,7 +33,7 @@ import {
 import { IconType } from "react-icons";
 import { ReactText } from "react";
 
-import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowBackIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 
 interface LinkItemProps {
   name: string;
@@ -44,14 +47,30 @@ const LinkItems: Array<LinkItemProps> = [
 ];
 
 export default function SimpleSidebar({ children }: { children: ReactNode }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  //const { isOpen, onOpen, onClose } = useDisclosure();
+  // 複数のuseDisclosureを利用したいので、別名をつける
+  // メニュー機能用
+  const {
+    isOpen: isOpenMenu,
+    onOpen: onOpenMenu,
+    onClose: onCloseMenu,
+  } = useDisclosure();
+
+  // 検索機能用
+  const {
+    isOpen: isOpenSearch,
+    onOpen: onOpenSearch,
+    onClose: onCloseSearch,
+  } = useDisclosure();
+
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
-        onClose={() => onClose}
+        onClose={() => onCloseMenu}
         display={{ base: "none", lg: "block" }} // lgサイズ以上はPC用のメニュを表示する
       />
 
+      {/* Charaku Teamplateにあったサンプル */}
       {/* <Drawer
         autoFocus={false}
         isOpen={isOpen}
@@ -65,7 +84,8 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer> */}
-      <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+
+      <Drawer placement="left" onClose={onCloseMenu} isOpen={isOpenMenu}>
         <DrawerOverlay />
         <DrawerContent>
           <DrawerHeader
@@ -99,7 +119,7 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
               </Stack>
               <CloseButton
                 display={{ base: "flex", lg: "none" }}
-                onClick={onClose}
+                onClick={onCloseMenu}
               />
             </Flex>
           </DrawerHeader>
@@ -116,7 +136,20 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
         </DrawerContent>
       </Drawer>
       {/* mobilenav */}
-      <MobileNav display={{ base: "flex", lg: "none" }} onOpen={onOpen} />
+      {isOpenSearch ? (
+        <MobileNavForSearch
+          display={{ base: "flex", lg: "none" }}
+          onCloseSearch={onCloseSearch}
+        />
+      ) : (
+        <MobileNav
+          display={{ base: "flex", lg: "none" }}
+          onOpenMenu={onOpenMenu}
+          onOpenSearch={onOpenSearch}
+        />
+      )}
+
+      {/* ウィンドウ幅がlg以上の場合は、margin-leftを60確保する */}
       <Box ml={{ base: 0, lg: 60 }} p="2">
         {/* メインコンテンツの位置 */}
         {children}
@@ -202,10 +235,12 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 };
 
 interface MobileProps extends FlexProps {
-  onOpen: () => void;
+  onOpenMenu: () => void;
+  onOpenSearch: () => void;
 }
 
-const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+// モバイスサイズで表示する場合のヘッダーです。
+const MobileNav = ({ onOpenMenu, onOpenSearch, ...rest }: MobileProps) => {
   // const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -220,7 +255,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           size={"md"}
           icon={<HamburgerIcon boxSize={6} />}
           aria-label={"Open Menu"}
-          onClick={onOpen}
+          onClick={onOpenMenu}
           backgroundColor={"#2A56A7"}
           color={"white"}
         />
@@ -237,33 +272,72 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           size={"md"}
           icon={<SearchIcon boxSize={5} />}
           aria-label={"Open Search"}
-          onClick={onOpen}
+          onClick={onOpenSearch}
           backgroundColor={"#2A56A7"}
           color={"white"}
         />
       </Flex>
     </Box>
-    // <Flex
-    //   ml={{ base: 0, lg: 60 }}
-    //   px={{ base: 4, lg: 24 }}
-    //   height="20"
-    //   alignItems="center"
-    //   bg={useColorModeValue("white", "gray.900")}
-    //   borderBottomWidth="1px"
-    //   borderBottomColor={useColorModeValue("gray.200", "gray.700")}
-    //   justifyContent="flex-start"
-    //   {...rest}
-    // >
-    //   <IconButton
-    //     variant="outline"
-    //     onClick={onOpen}
-    //     aria-label="open menu"
-    //     icon={<FiMenu />}
-    //   />
+  );
+};
 
-    //   <Text fontSize="2xl" ml="8" fontFamily="monospace" fontWeight="bold">
-    //     Mobile Logo
-    //   </Text>
-    // </Flex>
+interface MobileForSearchProps extends FlexProps {
+  onCloseSearch: () => void;
+}
+
+// モバイスサイズで表示する場合のヘッダー（検索用）です。
+const MobileNavForSearch = ({
+  onCloseSearch,
+  ...rest
+}: MobileForSearchProps) => {
+  // const { isOpen, onOpen, onClose } = useDisclosure();
+
+  return (
+    <Box
+      bg={useColorModeValue("#2A56A7", "gray.900")}
+      px={4}
+      display={{ lg: "none" }} // lgサイズ以上で非表示にする(Slidoではlgが境界)
+    >
+      <Flex h={16} alignItems={"center"}>
+        {/* 戻るアイコン */}
+        <IconButton
+          size={"md"}
+          icon={<ArrowBackIcon boxSize={6} />}
+          aria-label={"Open Menu"}
+          onClick={onCloseSearch}
+          backgroundColor={"#2A56A7"}
+          color={"white"}
+        />
+        {/* Flexの中で、横幅いっぱいに広げるために、 flex="1"を設定 */}
+        <Stack spacing={1} alignItems={"center"} flex="1">
+          <InputGroup>
+            {/* <InputLeftElement pointerEvents={"none"}>
+              <SearchIcon color="white" />
+            </InputLeftElement> */}
+            <Input
+              type="text"
+              placeholder="Search"
+              // width={"auto"}
+              // w="100%"
+              _placeholder={{ color: "gray.300" }}
+              // 通常表示で枠に色をつけない
+              border={"none"}
+              color={"white"}
+              // フォーカスされた時に枠の色をつけないようにする
+              _focusVisible={{
+                outline: "none",
+              }}
+            ></Input>
+          </InputGroup>
+        </Stack>
+
+        {/* タイトル */}
+        {/* <Stack spacing={8} alignItems={"center"}>
+          <Text fontSize={"md"} color={"white"} fontWeight={"bold"}>
+            検索
+          </Text>
+        </Stack> */}
+      </Flex>
+    </Box>
   );
 };
