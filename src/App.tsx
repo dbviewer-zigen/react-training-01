@@ -21,16 +21,21 @@ import { PhoneIcon, AddIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
 import SidebarWithHeader from "./sidebars/SidebarWithHeader";
 import SimpleSidebar from "./sidebars/SimpleSidebar";
 import { DrawerExample } from "./drawers/DrawerExample";
+import { EventList } from "./Events/EventList";
 export const App = () => {
   return (
     <>
       {/* ヘッダー */}
-      <Header></Header>
+      <Header />
 
       {/* スライドバー */}
       <SimpleSidebar>
+        {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
+        // alignItems='center'をつけると横方向に真ん中寄せします。 */}
+
         <Box p={4}>
-          これがSimpleSidebarの中に入れている要素です＝メインコンテンツ
+          {/* ここがメインコンテンツ */}
+          <EventList />
         </Box>
       </SimpleSidebar>
 
@@ -47,7 +52,7 @@ export const App = () => {
         boxSize={14}
         rounded="full"
         p={2}
-        boxShadow="2xl"
+        boxShadow="md"
       />
     </>
   );
