@@ -51,6 +51,7 @@ export const App = () => {
           rounded="full"
           p={2}
           boxShadow="md"
+          shadow={"md"}
         />
       </Box>
     </>
