@@ -7,7 +7,7 @@ export const App = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Owner />} />
+        <Route path="/" element={<Paticipant />} />
         <Route path="/owner" element={<Owner />} />
         <Route path="/paticipant" element={<Paticipant />} />
       </Routes>
