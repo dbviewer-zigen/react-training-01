@@ -1,76 +1,16 @@
 import React from "react";
-import Header from "./headers/Header";
-import {
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  Link,
-  IconButton,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-} from "@chakra-ui/react";
-import { PhoneIcon, AddIcon, QuestionOutlineIcon } from "@chakra-ui/icons";
-import SidebarWithHeader from "./sidebars/SidebarWithHeader";
-import SimpleSidebar from "./sidebars/SimpleSidebar";
-import { DrawerExample } from "./drawers/DrawerExample";
-import { EventList } from "./Events/EventList";
+
+import { Routes, Route } from "react-router-dom";
+import { App as Paticipant } from "./Paticipant/App";
+import { App as Owner } from "./Owner/App";
 export const App = () => {
   return (
-    <>
-      <Box>
-        {/* スタイルシートを拡張する方法 */}
-        {/* <Box
-          ...
-          sx={{
-            '&::-webkit-scrollbar': {
-              width: '16px',
-              borderRadius: '8px',
-              backgroundColor: `rgba(0, 0, 0, 0.05)`,
-            },
-            '&::-webkit-scrollbar-thumb': {
-              backgroundColor: `rgba(0, 0, 0, 0.05)`,
-            },
-          }}
-      > */}
-
-        {/* ヘッダー */}
-        <Header />
-
-        {/* スライドバー */}
-        <SimpleSidebar>
-          {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
-        // alignItems='center'をつけると横方向に真ん中寄せします。 */}
-
-          <Box p={4}>
-            {/* ここがメインコンテンツ */}
-            <EventList />
-          </Box>
-        </SimpleSidebar>
-
-        {/* FloatingActionButton */}
-        <IconButton
-          colorScheme="teal"
-          aria-label="Question"
-          icon={<QuestionOutlineIcon boxSize={5} />}
-          position="fixed"
-          right={6}
-          bottom={6}
-          // w={14}
-          // h={14}
-          boxSize={14}
-          rounded="full"
-          p={2}
-          boxShadow="md"
-        />
-      </Box>
-    </>
+    <div className="App">
+      <Routes>
+        <Route path="/" element={<Owner />} />
+        <Route path="/owner" element={<Owner />} />
+        <Route path="/paticipant" element={<Paticipant />} />
+      </Routes>
+    </div>
   );
 };

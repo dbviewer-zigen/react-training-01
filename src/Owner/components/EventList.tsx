@@ -24,7 +24,7 @@ import {
 import { HamburgerIcon, CalendarIcon, AddIcon } from "@chakra-ui/icons";
 import React from "react";
 import { RiFilter3Fill, RiMore2Line } from "react-icons/ri";
-import { CreateSlidoButton } from "../buttons/CreateSlidoButton";
+import { CreateSlidoButton } from "./CreateSlidoButton";
 export const EventList = () => {
   return (
     <Container maxW={"6xl"}>

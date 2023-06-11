@@ -46,7 +46,7 @@ const LinkItems: Array<LinkItemProps> = [
   { name: "Tutorials", icon: FiStar },
 ];
 
-export default function SimpleSidebar({ children }: { children: ReactNode }) {
+export function Sidebar({ children }: { children: ReactNode }) {
   //const { isOpen, onOpen, onClose } = useDisclosure();
   // 複数のuseDisclosureを利用したいので、別名をつける
   // メニュー機能用
