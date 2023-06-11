@@ -262,12 +262,9 @@ const MobileNav = ({ onOpenMenu, ...rest }: MobileProps) => {
           />
 
           {/* モバイル以上の場合に表示する */}
-          <Container
-            // bgColor={"blue"}
-            display={{ base: "none", md: "flex" }}
-          >
-            <Text color={"white"}>TEST for mobile</Text>
-          </Container>
+          <Text display={{ base: "none", md: "flex" }} color={"white"}>
+            TEST for mobile
+          </Text>
         </Stack>
 
         <Center
