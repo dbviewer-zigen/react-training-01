@@ -14,12 +14,12 @@ export const HeaderTabs = () => {
   return (
     <Tabs position="relative" variant="unstyled">
       <TabList>
-        <Tab p={"18px"} flex={1} minW={"180px"}>
+        <Tab p={"15px"} flex={1} minW={"180px"}>
           <Button leftIcon={<ChatIcon />} color={"white"} variant="link">
             Q&A
           </Button>
         </Tab>
-        <Tab p={"18px"} flex={1} minW={"180px"}>
+        <Tab p={"15px"} flex={1} minW={"180px"}>
           <Button leftIcon={<AtSignIcon />} color={"white"} variant="link">
             Polls
           </Button>

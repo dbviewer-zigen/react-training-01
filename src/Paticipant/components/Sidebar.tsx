@@ -241,7 +241,7 @@ const MobileNav = ({ onOpenMenu, ...rest }: MobileProps) => {
       px={4}
       display={{ lg: "none" }} // lgサイズ以上で非表示にする(Slidoではlgが境界)
     >
-      <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
+      <Flex h={14} alignItems={"center"} justifyContent={"space-between"}>
         {/* メニューアイコン */}
 
         <Stack
@@ -312,7 +312,7 @@ const MobileNav = ({ onOpenMenu, ...rest }: MobileProps) => {
       </Flex>
 
       <Flex
-        h={8}
+        h={10}
         alignItems={"center"}
         justifyContent={"space-between"}
         display={{ md: "none" }} // スマホサイズの場合のみ表示する
@@ -320,12 +320,12 @@ const MobileNav = ({ onOpenMenu, ...rest }: MobileProps) => {
         <Container maxW="3xl">
           <Tabs position="relative" variant="unstyled">
             <TabList>
-              <Tab p={"4px"} flex={1} minW={"180px"}>
+              <Tab p={"8px"} flex={1} minW={"180px"}>
                 <Button leftIcon={<ChatIcon />} color={"white"} variant="link">
                   Q&A
                 </Button>
               </Tab>
-              <Tab p={"4px"} flex={1} minW={"180px"}>
+              <Tab p={"8px"} flex={1} minW={"180px"}>
                 <Button
                   leftIcon={<AtSignIcon />}
                   color={"white"}

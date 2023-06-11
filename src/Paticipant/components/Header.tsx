@@ -37,7 +37,7 @@ export default function Header() {
     <>
       <Box bg={useColorModeValue("#2A56A7", "gray.900")} px={4}>
         <Flex
-          h={16}
+          h={14}
           alignItems={"center"}
           justifyContent={"space-between"}
           display={{ base: "none", lg: "flex" }}
