@@ -27,6 +27,12 @@ import {
   MenuList,
   useMenuItem,
   MenuItem,
+  Container,
+  Center,
+  Tabs,
+  TabList,
+  Tab,
+  TabIndicator,
 } from "@chakra-ui/react";
 
 import {
@@ -38,7 +44,7 @@ import {
   FiMenu,
   FiMessageSquare,
 } from "react-icons/fi";
-
+import { PhoneIcon, AtSignIcon, ChatIcon } from "@chakra-ui/icons";
 import { HiOutlineSwitchHorizontal } from "react-icons/hi";
 import { CgDarkMode, CgInfo } from "react-icons/cg";
 
@@ -254,10 +260,40 @@ const MobileNav = ({ onOpenMenu, ...rest }: MobileProps) => {
             color={"white"}
             mr={2}
           />
-          <Text color={"white"}>TEST for mobile</Text>
+
+          {/* モバイル以上の場合に表示する */}
+          <Container
+            // bgColor={"blue"}
+            display={{ base: "none", md: "flex" }}
+          >
+            <Text color={"white"}>TEST for mobile</Text>
+          </Container>
         </Stack>
 
-        <HeaderTabs />
+        <Center
+          display={{ md: "none" }}
+          // bgColor={"red"}
+          alignContent={"center"}
+        >
+          {/* スマホサイズの場合のタイトル */}
+          <Text color={"white"}>TEST</Text>
+        </Center>
+
+        <Flex
+          h={16}
+          alignItems={"center"}
+          justifyContent={"space-between"}
+          display={{ base: "none", md: "flex" }}
+          // モバイルサイズ以上の場合のみ表示する
+        >
+          <Container
+            maxW="md"
+            // bgColor={"red"}
+          >
+            <HeaderTabs />
+          </Container>
+        </Flex>
+
         <Menu>
           <MenuButton
             as={Button}
@@ -276,6 +312,40 @@ const MobileNav = ({ onOpenMenu, ...rest }: MobileProps) => {
             <MenuItem>My questions</MenuItem>
           </MenuList>
         </Menu>
+      </Flex>
+
+      <Flex
+        h={8}
+        alignItems={"center"}
+        justifyContent={"space-between"}
+        display={{ md: "none" }} // スマホサイズの場合のみ表示する
+      >
+        <Container maxW="3xl">
+          <Tabs position="relative" variant="unstyled">
+            <TabList>
+              <Tab p={"4px"} flex={1} minW={"180px"}>
+                <Button leftIcon={<ChatIcon />} color={"white"} variant="link">
+                  Q&A
+                </Button>
+              </Tab>
+              <Tab p={"4px"} flex={1} minW={"180px"}>
+                <Button
+                  leftIcon={<AtSignIcon />}
+                  color={"white"}
+                  variant="link"
+                >
+                  Polls
+                </Button>
+              </Tab>
+            </TabList>
+            <TabIndicator
+              mt="-1.5px"
+              height="1.7px"
+              bg="white"
+              borderRadius="1px"
+            />
+          </Tabs>
+        </Container>
       </Flex>
     </Box>
   );

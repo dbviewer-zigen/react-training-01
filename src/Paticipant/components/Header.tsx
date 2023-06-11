@@ -22,6 +22,7 @@ import {
   InputGroup,
   InputLeftElement,
   Spacer,
+  Container,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { AiOutlineUser } from "react-icons/ai";
@@ -70,7 +71,16 @@ export default function Header() {
             </Text>
           </Stack>
 
-          <HeaderTabs></HeaderTabs>
+          <Flex
+            h={16}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            display={{ base: "none", md: "flex" }}
+          >
+            <Container maxW="md">
+              <HeaderTabs />
+            </Container>
+          </Flex>
           <Flex
             alignItems={"center"}
             display={{ base: "none", lg: "flex" }} // lgサイズ以上は表示にする
