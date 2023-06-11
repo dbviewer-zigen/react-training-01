@@ -64,7 +64,8 @@ export default function SimpleSidebar({ children }: { children: ReactNode }) {
   } = useDisclosure();
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    // 100vh問題(ブラウザの種類によって、100vhを指定しても、余分なスクロールが表示される）
+    <Box bg={useColorModeValue("gray.100", "gray.900")} minH="100vh">
       <SidebarContent
         onClose={() => onCloseMenu}
         display={{ base: "none", lg: "block" }} // lgサイズ以上はPC用のメニュを表示する
@@ -318,16 +319,21 @@ const MobileNavForSearch = ({
             <Input
               type="text"
               placeholder="Search"
+              size="sm"
               // width={"auto"}
               // w="100%"
               _placeholder={{ color: "gray.300" }}
               // 通常表示で枠に色をつけない
-              border={"none"}
+              border={"hidden"}
+              //
               color={"white"}
-              // フォーカスされた時に枠の色をつけないようにする
-              _focusVisible={{
-                outline: "none",
-              }}
+              // // フォーカスされた時に枠の色をつけないようにする
+              focusBorderColor={"white"}
+              borderRadius={5}
+              // _focusVisible={{
+              //   outlineColor: "gray.300",
+              //   // outline: "none",
+              // }}
             ></Input>
           </InputGroup>
         </Stack>

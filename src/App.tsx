@@ -25,35 +25,52 @@ import { EventList } from "./Events/EventList";
 export const App = () => {
   return (
     <>
-      {/* ヘッダー */}
-      <Header />
+      <Box>
+        {/* スタイルシートを拡張する方法 */}
+        {/* <Box
+          ...
+          sx={{
+            '&::-webkit-scrollbar': {
+              width: '16px',
+              borderRadius: '8px',
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+            },
+            '&::-webkit-scrollbar-thumb': {
+              backgroundColor: `rgba(0, 0, 0, 0.05)`,
+            },
+          }}
+      > */}
 
-      {/* スライドバー */}
-      <SimpleSidebar>
-        {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
+        {/* ヘッダー */}
+        <Header />
+
+        {/* スライドバー */}
+        <SimpleSidebar>
+          {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
         // alignItems='center'をつけると横方向に真ん中寄せします。 */}
 
-        <Box p={4}>
-          {/* ここがメインコンテンツ */}
-          <EventList />
-        </Box>
-      </SimpleSidebar>
+          <Box p={4}>
+            {/* ここがメインコンテンツ */}
+            <EventList />
+          </Box>
+        </SimpleSidebar>
 
-      {/* FloatingActionButton */}
-      <IconButton
-        colorScheme="teal"
-        aria-label="Question"
-        icon={<QuestionOutlineIcon boxSize={5} />}
-        position="fixed"
-        right={6}
-        bottom={6}
-        // w={14}
-        // h={14}
-        boxSize={14}
-        rounded="full"
-        p={2}
-        boxShadow="md"
-      />
+        {/* FloatingActionButton */}
+        <IconButton
+          colorScheme="teal"
+          aria-label="Question"
+          icon={<QuestionOutlineIcon boxSize={5} />}
+          position="fixed"
+          right={6}
+          bottom={6}
+          // w={14}
+          // h={14}
+          boxSize={14}
+          rounded="full"
+          p={2}
+          boxShadow="md"
+        />
+      </Box>
     </>
   );
 };

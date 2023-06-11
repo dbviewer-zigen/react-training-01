@@ -10,6 +10,8 @@ import {
   Menu,
   MenuButton,
   MenuList,
+  MenuOptionGroup,
+  MenuItemOption,
   MenuItem,
   MenuDivider,
   useDisclosure,
@@ -19,6 +21,7 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Spacer,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import { AiOutlineUser } from "react-icons/ai";
@@ -147,11 +150,57 @@ export default function Header() {
                   icon={<AiOutlineUser fontSize="1.5rem" />}
                 ></Avatar>
               </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
+              <MenuList minWidth="260px">
+                <MenuItem pointerEvents={"none"}>
+                  {/* EDITボタンだけがクリック出来るように見せたい */}
+                  {/*  
+                    1. MenuItemのpointerEventsをnoneにする（クリックさせない）
+                    2. EDITのボタンに対して、pointerEventsをautoを設定する
+                  */}
+                  <Flex
+                    h={12}
+                    width={"100%"}
+                    alignItems={"center"}
+                    justifyContent={"space-between"}
+                  >
+                    <Stack spacing={1} direction={"row"} align={"left"}>
+                      <Avatar
+                        size={"sm"}
+                        icon={<AiOutlineUser fontSize="1.2rem" />}
+                      ></Avatar>
+
+                      <Spacer></Spacer>
+                      <Stack spacing={0} direction={"column"} align={"left"}>
+                        <Text fontSize={"xs"} fontWeight={"bold"}>
+                          Zigen Zigen
+                        </Text>
+                        <Text fontSize={"xs"}>zigen.zigen@gmail.com</Text>
+                      </Stack>
+                    </Stack>
+                    <Button
+                      size={"xs"}
+                      variant={"none"}
+                      pointerEvents={"auto"}
+                      onClick={() => alert("test")}
+                      color={"blue"}
+                    >
+                      EDIT
+                    </Button>
+                  </Flex>
+                </MenuItem>
                 <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
+
+                <MenuItem>Events</MenuItem>
+                <MenuItem>Schedule event</MenuItem>
+                <MenuItem>Organization setting and billing</MenuItem>
+                <MenuItem>Team management</MenuItem>
+                <MenuDivider />
+                <MenuItem>Upgrade</MenuItem>
+                <MenuItem>Product news</MenuItem>
+                <MenuItem>Help Center</MenuItem>
+                <MenuItem>Tutorials</MenuItem>
+                <MenuItem>Send us feedback</MenuItem>
+                <MenuItem>Logout</MenuItem>
               </MenuList>
             </Menu>
           </Flex>
