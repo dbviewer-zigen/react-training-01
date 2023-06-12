@@ -35,9 +35,10 @@ export default function Header() {
   console.log("isOpen", isOpen);
   return (
     <>
+      {/* ヘッダーのheight 57px */}
       <Box bg={useColorModeValue("#2A56A7", "gray.900")} px={4}>
         <Flex
-          h={14}
+          h={14} // 56px
           alignItems={"center"}
           justifyContent={"space-between"}
           display={{ base: "none", lg: "flex" }}

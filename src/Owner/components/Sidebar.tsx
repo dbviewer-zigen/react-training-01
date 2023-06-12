@@ -34,6 +34,7 @@ import { IconType } from "react-icons";
 import { ReactText } from "react";
 
 import { ArrowBackIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
+import Header from "./Header";
 
 interface LinkItemProps {
   name: string;
@@ -66,6 +67,9 @@ export function Sidebar({ children }: { children: ReactNode }) {
   return (
     // 100vh問題(ブラウザの種類によって、100vhを指定しても、余分なスクロールが表示される）
     <Box bg={useColorModeValue("gray.100", "gray.900")} minH="100vh">
+      {/* ヘッダー */}
+      <Header />
+
       <SidebarContent
         onClose={() => onCloseMenu}
         display={{ base: "none", lg: "block" }} // lgサイズ以上はPC用のメニュを表示する

@@ -41,15 +41,15 @@ export const App = () => {
   };
   return (
     <>
-      <Box onClick={handleClick}>
+      <Box onClick={handleClick} h={"100vh"}>
         {/* ヘッダー */}
-        <Header />
+        {/* <Header /> */}
         {/* スライドバー */}
         <Sidebar>
           {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
         // alignItems='center'をつけると横方向に真ん中寄せします。 */}
 
-          <Box p={4}>
+          <Box p={4} flexGrow={1}>
             {/* ここがメインコンテンツ */}
             <QuestionInput
               isOpenQuestion={isOpenQuestion}

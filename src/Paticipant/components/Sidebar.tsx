@@ -54,6 +54,7 @@ import { ReactText } from "react";
 import { ArrowBackIcon, HamburgerIcon, SearchIcon } from "@chakra-ui/icons";
 import { AiOutlineUser } from "react-icons/ai";
 import { HeaderTabs } from "./HeaderTabs";
+import Header from "./Header";
 interface LinkItemProps {
   name: string;
   icon: IconType;
@@ -85,6 +86,8 @@ export function Sidebar({ children }: { children: ReactNode }) {
   return (
     // 100vh問題(ブラウザの種類によって、100vhを指定しても、余分なスクロールが表示される）
     <Box bg={useColorModeValue("gray.100", "gray.900")} minH="100vh">
+      <Header />
+
       <SidebarContent
         onClose={() => onCloseMenu}
         display={{ base: "none", lg: "block" }} // lgサイズ以上はPC用のメニュを表示する
@@ -135,6 +138,7 @@ export function Sidebar({ children }: { children: ReactNode }) {
           </DrawerBody>
         </DrawerContent>
       </Drawer>
+
       {/* mobilenav */}
       <MobileNav
         display={{ base: "flex", lg: "none" }}
@@ -166,6 +170,28 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       h="full"
       {...rest}
     >
+      <Flex
+        alignItems="end"
+        mt={2}
+        ml={4}
+        mb={3}
+        justifyContent="space-between"
+      >
+        <Stack spacing={0} direction={"column"} align={"left"}>
+          <Text fontSize={"sm"} color={"gray"} fontWeight={"bold"}>
+            TEST
+          </Text>
+          <Stack spacing={0} direction={"column"} align={"left"}>
+            <Text fontSize={"xs"} color={"gray"}>
+              May 1-4, 2023
+            </Text>
+            <Text fontSize={"xs"} color={"gray"}>
+              # 1234 123
+            </Text>
+          </Stack>
+        </Stack>
+      </Flex>
+
       {/* Slidebarのタイトルと閉じるボタンを表示する場合 */}
       {/* <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">

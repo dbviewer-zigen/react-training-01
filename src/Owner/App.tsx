@@ -23,9 +23,6 @@ export const App = () => {
           }}
       > */}
 
-        {/* ヘッダー */}
-        <Header />
-
         {/* スライドバー */}
         <Sidebar>
           {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
