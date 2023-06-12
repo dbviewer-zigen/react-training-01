@@ -155,7 +155,7 @@ export function Sidebar({ children }: { children: ReactNode }) {
       )}
 
       {/* ウィンドウ幅がlg以上の場合は、margin-leftを60確保する */}
-      <Box ml={{ base: 0, lg: 60 }} p="2">
+      <Box ml={{ base: 0, lg: 60 }}>
         {/* メインコンテンツの位置 */}
         {/* <Box alignItems={"center"}> </Box> */}
         {children}

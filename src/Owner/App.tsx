@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 import { Sidebar } from "./components/Sidebar";
-import { Box, IconButton } from "@chakra-ui/react";
+import { Box, IconButton, Flex } from "@chakra-ui/react";
 import { EventList } from "./components/EventList";
 import { QuestionOutlineIcon } from "@chakra-ui/icons";
 export const App = () => {
@@ -27,7 +27,6 @@ export const App = () => {
         <Sidebar>
           {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
         // alignItems='center'をつけると横方向に真ん中寄せします。 */}
-
           <Box p={4}>
             {/* ここがメインコンテンツ */}
             <EventList />

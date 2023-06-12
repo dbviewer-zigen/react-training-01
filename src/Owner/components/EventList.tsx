@@ -232,12 +232,12 @@ export const EventList = () => {
           </CardBody>
         </Card>
       </VStack>
-      <Container maxW="2xl" bg="gray.200" centerContent>
+      {/* <Container maxW="2xl" bg="gray.200" centerContent>
         <Box padding="4" bg="yellow.400" color="black" maxW="md">
           画面全体に不要なスクロールがついている（下に余白が出ている）
           メインコンテンツにのみスクロールをつけたい
         </Box>
-      </Container>
+      </Container> */}
     </Container>
   );
 };

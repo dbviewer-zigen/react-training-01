@@ -85,7 +85,11 @@ export function Sidebar({ children }: { children: ReactNode }) {
 
   return (
     // 100vh問題(ブラウザの種類によって、100vhを指定しても、余分なスクロールが表示される）
-    <Box bg={useColorModeValue("gray.100", "gray.900")} minH="100vh">
+    <Box
+      bg={useColorModeValue("gray.100", "gray.900")}
+      // display={"flex"} // flexにしたいが、サイドバーが上に移動する
+      // flexDirection={"column"}
+    >
       <Header />
 
       <SidebarContent
@@ -146,11 +150,16 @@ export function Sidebar({ children }: { children: ReactNode }) {
       />
 
       {/* ウィンドウ幅がlg以上の場合は、margin-leftを60確保する */}
-      <Box ml={{ base: 0, lg: 60 }} p="2">
+      <Flex
+        ml={{ base: 0, lg: 60 }}
+        flexGrow={1}
+        display={"flex"}
+        flexDirection={"column"}
+      >
         {/* メインコンテンツの位置 */}
         {/* <Box alignItems={"center"}> </Box> */}
         {children}
-      </Box>
+      </Flex>
     </Box>
   );
 }

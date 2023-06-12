@@ -20,6 +20,7 @@ import {
   TabPanel,
   Center,
   Container,
+  Flex,
 } from "@chakra-ui/react";
 import React from "react";
 import Header from "./components/Header";
@@ -41,7 +42,14 @@ export const App = () => {
   };
   return (
     <>
-      <Box onClick={handleClick} h={"100vh"}>
+      <Box onClick={handleClick}>
+        {/* <Box
+        onClick={handleClick}
+        h={"100vh"}
+        bgColor={"black"}
+        display={"flex"}
+        flex={"column"}
+      > */}
         {/* ヘッダー */}
         {/* <Header /> */}
         {/* スライドバー */}
@@ -49,18 +57,19 @@ export const App = () => {
           {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
         // alignItems='center'をつけると横方向に真ん中寄せします。 */}
 
-          <Box p={4} flexGrow={1}>
+          <Box p={4} bgColor={"white"}>
+            {/* <Flex p={4} bgColor={"red"} flexGrow={1} direction={"column"}> */}
             {/* ここがメインコンテンツ */}
             <QuestionInput
               isOpenQuestion={isOpenQuestion}
               onOpenQuestion={onOpenQuestion}
             ></QuestionInput>
 
-            <Box display="flex" justifyContent="center" mt={4}>
+            <Flex display="flex" justifyContent="center" mt={4}>
               <Tabs
                 position="relative"
                 variant="unstyled"
-                // bgColor={"white"}
+                // bgColor={"red"}
                 w={{ base: "90vw", sm: "80vw", md: "70vw", lg: "60vw" }}
               >
                 <TabList>
@@ -85,7 +94,7 @@ export const App = () => {
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-            </Box>
+            </Flex>
           </Box>
         </Sidebar>
         <Button
