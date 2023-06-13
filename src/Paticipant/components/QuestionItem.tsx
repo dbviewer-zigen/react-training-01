@@ -19,6 +19,10 @@ import {
   useBoolean,
   Text,
   Spacer,
+  Menu,
+  MenuItem,
+  MenuButton,
+  MenuList,
 } from "@chakra-ui/react";
 import { FormErrorMessage, FormLabel, FormControl } from "@chakra-ui/react";
 import { AiOutlineUser } from "react-icons/ai";
@@ -85,14 +89,31 @@ export const QuestionItem = () => {
               // bgColor={"blue"}
             >
               <Text fontSize={"sm"}>あいうえお</Text>
-              <IconButton
+
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  // size={"md"}
+                  icon={<RiMoreFill size={20} />}
+                />
+
+                <MenuList>
+                  <MenuItem>Edit</MenuItem>
+                  <MenuItem>Delete</MenuItem>
+                </MenuList>
+              </Menu>
+
+              {/* <IconButton
                 size={"md"}
                 icon={<RiMoreFill />}
                 aria-label={"Open Search"}
                 // onClick={isOpen ? onClose : onOpen}
                 backgroundColor={"white"}
                 // color={"white"}
-              />
+              /> */}
             </Flex>
           </Card>
         </FormControl>
