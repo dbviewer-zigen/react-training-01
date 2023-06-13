@@ -28,6 +28,7 @@ import { Sidebar } from "./components/Sidebar";
 import { AiOutlineUser } from "react-icons/ai";
 import { QuestionInput } from "./components/QuestionInput";
 import { QuestionItem } from "./components/QuestionItem";
+import { AskButton } from "./components/AskButton";
 export const App = () => {
   const {
     isOpen: isOpenQuestion,
@@ -50,13 +51,9 @@ export const App = () => {
         display={"flex"}
         flex={"column"}
       > */}
-        {/* ヘッダー */}
-        {/* <Header /> */}
+
         {/* スライドバー */}
         <Sidebar>
-          {/* display='flex'がついている状態でjustifyContent='center'をつけると縦方向に真ん中寄せ
-        // alignItems='center'をつけると横方向に真ん中寄せします。 */}
-
           <Box p={4} bgColor={"white"}>
             {/* <Flex p={4} bgColor={"red"} flexGrow={1} direction={"column"}> */}
             {/* ここがメインコンテンツ */}
@@ -97,22 +94,8 @@ export const App = () => {
             </Flex>
           </Box>
         </Sidebar>
-        <Button
-          colorScheme="teal"
-          aria-label="Question"
-          position="fixed"
-          right={6}
-          bottom={6}
-          // w={14}
-          // h={14}
-          boxSize={14}
-          rounded="full"
-          p={2}
-          boxShadow="md"
-          shadow={"md"}
-        >
-          Ask
-        </Button>
+
+        <AskButton />
       </Box>
     </>
   );
