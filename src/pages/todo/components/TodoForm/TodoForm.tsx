@@ -1,10 +1,12 @@
 // TodoForm.tsx
 import React, { useState } from "react";
-import { useTodoContext } from "../store/todoContext";
-import { addTodo } from "../actions/todoActions";
-import { Todo } from "../types/todoTypes";
+import { useTodoContext } from "../../todoContext";
+import { Todo } from "../../todoTypes";
+import useTodoLogic from "../../todoLogic";
 
 const TodoForm: React.FC = () => {
+  const { todos, error, addTodo } = useTodoLogic();
+
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const { dispatch } = useTodoContext();
@@ -18,7 +20,8 @@ const TodoForm: React.FC = () => {
       description: description,
     };
 
-    dispatch(addTodo(newTodo));
+    // dispatch(addTodo(newTodo)); // ここでdispathはしない(logic経由でdispathする)
+    addTodo(newTodo);
 
     setName("");
     setDescription("");

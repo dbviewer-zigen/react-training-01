@@ -1,22 +1,16 @@
 // todoReducer.ts
-import {
-  FETCH_TODOS_SUCCESS,
-  ADD_TODO_SUCCESS,
-  UPDATE_TODO_SUCCESS,
-  DELETE_TODO_SUCCESS,
-  SET_ERROR,
-} from "../actions/actionTypes";
-import { Todo } from "../types/todoTypes";
+import { Action, ActionTypes } from "./actionTypes";
+import { Todo, TodoState } from "./todoTypes";
 
-interface TodoState {
-  todos: Todo[];
-  error: string | null;
-}
+// interface TodoState {
+//   todos: Todo[];
+//   error: string | null;
+// }
 
-interface Action {
-  type: string;
-  payload: any;
-}
+// interface Action {
+//   type: string;
+//   payload: any;
+// }
 
 const initialState: TodoState = {
   todos: [],
@@ -28,19 +22,21 @@ const todoReducer = (
   action: Action
 ): TodoState => {
   switch (action.type) {
-    case FETCH_TODOS_SUCCESS:
+    case ActionTypes.FETCH_TODOS_SUCCESS:
+      console.log("call FETCH_TODOS_SUCCESS action:", action);
+
       return {
         ...state,
         todos: action.payload,
         error: null,
       };
-    case ADD_TODO_SUCCESS:
+    case ActionTypes.ADD_TODO_SUCCESS:
       return {
         ...state,
         todos: [...state.todos, action.payload],
         error: null,
       };
-    case UPDATE_TODO_SUCCESS:
+    case ActionTypes.UPDATE_TODO_SUCCESS:
       const updatedTodos = state.todos.map((todo) =>
         todo.id === action.payload.id ? action.payload : todo
       );
@@ -49,7 +45,7 @@ const todoReducer = (
         todos: updatedTodos,
         error: null,
       };
-    case DELETE_TODO_SUCCESS:
+    case ActionTypes.DELETE_TODO_SUCCESS:
       const filteredTodos = state.todos.filter(
         (todo) => todo.id !== action.payload
       );
@@ -58,12 +54,13 @@ const todoReducer = (
         todos: filteredTodos,
         error: null,
       };
-    case SET_ERROR:
+    case ActionTypes.SET_ERROR:
       return {
         ...state,
         error: action.payload,
       };
     default:
+      console.log("call default action:", action);
       return state;
   }
 };

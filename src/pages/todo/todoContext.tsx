@@ -1,17 +1,14 @@
 // todoContext.tsx
 import React, { createContext, useContext, useEffect, useReducer } from "react";
-import { fetchTodos } from "../actions/todoActions";
-import todoReducer from "../reducers/todoReducer";
-import { Todo } from "../types/todoTypes";
 
-interface TodoState {
-  todos: Todo[];
-  error: string | null;
-}
+import todoReducer from "./todoReducer";
+import { TodoState } from "./todoTypes";
+import { Action } from "./actionTypes";
+import useTodoLogic from "./todoLogic";
 
 interface TodoContextProps {
   state: TodoState;
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<Action>;
 }
 
 const initialState: TodoState = {
@@ -29,12 +26,13 @@ interface Props {
 }
 
 export const TodoProvider = ({ children }: Props) => {
+  // const { todos } = useTodoLogic();
   const [state, dispatch] = useReducer(todoReducer, initialState);
 
-  useEffect(() => {
-    // dispatch(fetchTodos());
-    fetchTodos();
-  }, []);
+  // useEffect(() => {
+  //   // dispatch(fetchTodos());
+  //   fetchTodos();
+  // }, []);
 
   return (
     <TodoContext.Provider value={{ state, dispatch }}>

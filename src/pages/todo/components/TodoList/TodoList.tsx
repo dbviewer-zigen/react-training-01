@@ -1,24 +1,22 @@
 // TodoList.tsx
 import React from "react";
-import { useTodoContext } from "../store/todoContext";
-import { deleteTodo } from "../actions/todoActions";
+import useTodoLogic from "../../todoLogic";
 
 const TodoList: React.FC = () => {
-  const { state, dispatch } = useTodoContext();
-
+  const { todos, error, deleteTodo } = useTodoLogic();
   const handleDelete = (todoId: string) => {
-    dispatch(deleteTodo(todoId));
+    deleteTodo(todoId);
   };
 
   return (
     <div>
-      {state.todos.map((todo) => (
+      {todos.map((todo) => (
         <div key={todo.id}>
           <span>{todo.name}</span>
           <button onClick={() => handleDelete(todo.id)}>Delete</button>
         </div>
       ))}
-      {state.error && <p>Error: {state.error}</p>}
+      {error && <p>Error: {error}</p>}
     </div>
   );
 };

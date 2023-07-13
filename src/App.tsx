@@ -145,6 +145,7 @@ const App: React.FC = () => {
       if ("data" in result && result.data) {
         const posts = result.data as ListTodosQuery;
         if (posts.listTodos) {
+          console.log("ヒット件数:", posts.listTodos?.items.length);
           setPosts(posts.listTodos.items as Todo[]);
         }
       }
