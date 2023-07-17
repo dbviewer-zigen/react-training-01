@@ -6,8 +6,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import TodoList from "./pages/todo/components/TodoList/TodoList";
-import { TodoProvider } from "./pages/todo/todoContext";
+import { TodoPage } from "./pages/TodoPage";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -18,11 +17,8 @@ Amplify.configure(awsExports);
 root.render(
   <>
     {/* <React.StrictMode> */}
-    <App />
-    <hr />
-    <TodoProvider>
-      <TodoList />
-    </TodoProvider>
+    {/* <App /> */}
+    <TodoPage />
     {/* </React.StrictMode> */}
   </>
 );

@@ -1,17 +1,16 @@
 // todoContext.tsx
 import React, { createContext, useContext, useEffect, useReducer } from "react";
 
-import todoReducer from "./todoReducer";
-import { TodoState } from "./todoTypes";
+import todoReducer from "./reducer";
+import { TodoState } from "./types";
 import { Action } from "./actionTypes";
-import useTodoLogic from "./todoLogic";
 
 interface TodoContextProps {
   state: TodoState;
   dispatch: React.Dispatch<Action>;
 }
 
-const initialState: TodoState = {
+export const initialState: TodoState = {
   todos: [],
   error: null,
 };
