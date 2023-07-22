@@ -1,41 +1,21 @@
 // TodoList.tsx
-import React, { useState } from "react";
+import React from "react";
 import { useLogic } from "./logic";
-import { Todo } from "../../types";
 
 // TODOリストを表示するコンポーネント
 export const TodoList = () => {
-  const { todos, error, editTodo, removeTodo } = useLogic();
-
-  const [id, setId] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
-  const handleDelete = (todoId: string) => {
-    console.log("handle delete btn");
-    removeTodo(todoId);
-  };
-
-  // Editボタンを押下した時に、更新用フォームに値を設定する
-  const handleEdit = (todo: Todo) => {
-    console.log("handle edit btn :", todo);
-    setId(todo.id);
-    setName(todo.name);
-    setDescription(todo.description!);
-  };
-
-  // 更新用のSubmitボタン押下時の処理
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const updateTodo: Todo = {
-      id: id,
-      name: name,
-      description: description,
-    };
-    editTodo(updateTodo);
-    setName("");
-    setDescription("");
-  };
+  // const {} = useInit();
+  const {
+    name,
+    description,
+    todos,
+    error,
+    setName,
+    setDescription,
+    handleEdit,
+    handleDelete,
+    handleSubmit,
+  } = useLogic();
 
   return (
     <div>

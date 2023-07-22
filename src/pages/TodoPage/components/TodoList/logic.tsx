@@ -1,159 +1,85 @@
 // logic.ts
-import { Dispatch, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTodoContext } from "../../context";
 import { Todo } from "../../types";
-
-import { API, graphqlOperation } from "aws-amplify";
-
-import { GraphQLResult } from "@aws-amplify/api";
 import {
-  addTodoSuccess,
-  deleteTodoSuccess,
-  fetchTodosSuccess,
-  setError,
-  updateTodoSuccess,
+  addSubscription,
+  deleteSubscription,
+  editTodo,
+  fetchTodos,
+  removeTodo,
+  updateSubscription,
 } from "../../action";
 
-import {
-  ListTodosQuery,
-  OnCreateTodoSubscription,
-  OnDeleteTodoSubscription,
-  OnUpdateTodoSubscription,
-} from "../../../../API";
-import { listTodos } from "../../../../graphql/queries";
-import { deleteTodo, updateTodo } from "../../../../graphql/mutations";
-import {
-  onCreateTodo,
-  onDeleteTodo,
-  onUpdateTodo,
-} from "../../../../graphql/subscriptions";
-
-interface ErrorResponse {
-  errors: { message: string }[];
-}
-
-type TodoSubscriptionCreateEvent = {
-  value: { data: OnCreateTodoSubscription };
-};
-type TodoSubscriptionUpdateEvent = {
-  value: { data: OnUpdateTodoSubscription };
-};
-type TodoSubscriptionDeleteEvent = {
-  value: { data: OnDeleteTodoSubscription };
-};
+import { ZenObservable } from "zen-observable-ts";
 
 export const useLogic = () => {
   const { state, dispatch } = useTodoContext();
 
+  const [id, setId] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const handleDelete = (todoId: string) => {
+    console.log("handle delete btn");
+    removeTodo(dispatch, todoId);
+  };
+
+  // Editボタンを押下した時に、更新用フォームに値を設定する
+  const handleEdit = (todo: Todo) => {
+    console.log("handle edit btn :", todo);
+    setId(todo.id);
+    setName(todo.name);
+    setDescription(todo.description!);
+  };
+
+  // 更新用のSubmitボタン押下時の処理
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const updateTodo: Todo = {
+      id: id,
+      name: name,
+      description: description,
+    };
+    editTodo(dispatch, updateTodo);
+    setName("");
+    setDescription("");
+  };
+
   useEffect(() => {
-    console.log("called useTodoLogic#useEffect");
+    console.log("useLogicのuseEffectが実行されました");
+    let addResult: ZenObservable.Subscription | null;
+    let updateResult: ZenObservable.Subscription | null;
+    let deleteResult: ZenObservable.Subscription | null;
 
-    (async () => {
-      // Todoの一覧取得APIを呼ぶ;
-      try {
-        const result = await API.graphql(graphqlOperation(listTodos));
-        if ("data" in result && result.data) {
-          const posts = result.data as ListTodosQuery;
-          if (posts.listTodos) {
-            console.log("Hit件数:", posts.listTodos?.items.length);
-            dispatch(fetchTodosSuccess(result.data?.listTodos?.items)); // todoActionを経由してdispathする
-          }
-        }
-      } catch (error) {
-        console.log("error fetchTodos2");
-        const errorMessage = (error as ErrorResponse).errors[0].message;
-        dispatch(setError(errorMessage)); // todoActionを経由してdispathする
-      }
+    addResult = addSubscription(dispatch);
+    updateResult = updateSubscription(dispatch);
+    deleteResult = deleteSubscription(dispatch);
 
-      // 追加された時のSubscriptionを登録
-      const addSub = API.graphql(graphqlOperation(onCreateTodo));
-      if ("subscribe" in addSub) {
-        addSub.subscribe({
-          next: ({ value: { data } }: TodoSubscriptionCreateEvent) => {
-            if (data.onCreateTodo) {
-              const todo: Todo = data.onCreateTodo;
-              console.log("subscrbe ", todo);
-              dispatch(addTodoSuccess(todo)); // todoActionを経由してdispathする
-            }
-          },
-        });
-      }
-      // 更新された時のSubscriptionを登録
-      const updateSub = API.graphql(graphqlOperation(onUpdateTodo));
-      if ("subscribe" in updateSub) {
-        updateSub.subscribe({
-          next: ({ value: { data } }: TodoSubscriptionUpdateEvent) => {
-            if (data.onUpdateTodo) {
-              const todo: Todo = data.onUpdateTodo;
-              console.log("subscrbe ", todo);
-              dispatch(updateTodoSuccess(todo)); // todoActionを経由してdispathする
-            }
-          },
-        });
-      }
-      // 削除された時のSubscriptionを登録
-      const deleteSub = API.graphql(graphqlOperation(onDeleteTodo));
-      if ("subscribe" in deleteSub) {
-        deleteSub.subscribe({
-          next: ({ value: { data } }: TodoSubscriptionDeleteEvent) => {
-            if (data.onDeleteTodo) {
-              const todo: Todo = data.onDeleteTodo;
-              console.log("subscrbe ", todo);
-              dispatch(deleteTodoSuccess(todo.id)); // todoActionを経由してdispathする
-            }
-          },
-        });
-      }
-    })();
-  }, [dispatch]);
+    fetchTodos(dispatch);
 
-  // deleteTodoという名称はAppsyncのmutationと被るため、removeとしている
-  const removeTodo = async (todoId: string) => {
-    console.log("start Logic#deleteTodo todoId:", todoId);
+    return () => {
+      // どっちの実装が良い？
+      // 案１
+      addResult!.unsubscribe();
+      updateResult!.unsubscribe();
+      deleteResult!.unsubscribe();
 
-    try {
-      const response = (await API.graphql(
-        graphqlOperation(deleteTodo, { input: { id: todoId } })
-      )) as GraphQLResult<any>;
-      if (response.errors) {
-        const errorMessage = response.errors[0].message;
-        dispatch(setError(errorMessage)); // todoActionを経由してdispathする
-      } else {
-        dispatch(deleteTodoSuccess(todoId)); // todoActionを経由してdispathする
-      }
-    } catch (error) {
-      console.log("error deleteTodo:");
-      const errorMessage = (error as ErrorResponse).errors[0].message;
-      dispatch(setError(errorMessage)); // todoActionを経由してdispathする
-    }
-  };
-
-  // updateTodoという名称はAppsyncのmutationと被るため、editとしている
-  const editTodo = async (todo: Todo) => {
-    console.log("start Logic#editTodo todoId:", todo);
-
-    try {
-      const response = (await API.graphql(
-        graphqlOperation(updateTodo, { input: todo })
-      )) as GraphQLResult<any>;
-      if (response.errors) {
-        const errorMessage = response.errors[0].message;
-        dispatch(setError(errorMessage)); // todoActionを経由してdispathする
-      } else {
-        console.log("更新データ ", response.data?.updateTodo);
-        dispatch(updateTodoSuccess(response.data?.updateTodo)); // todoActionを経由してdispathする
-      }
-    } catch (error) {
-      console.log("error deleteTodo:");
-      const errorMessage = (error as ErrorResponse).errors[0].message;
-      dispatch(setError(errorMessage)); // todoActionを経由してdispathする
-    }
-  };
-
+      // 案２
+      addResult && addResult.unsubscribe();
+      updateResult && updateResult.unsubscribe();
+      deleteResult && deleteResult.unsubscribe();
+    };
+  }, []);
   return {
+    name,
+    description,
     todos: state.todos,
     error: state.error,
-    editTodo,
-    removeTodo,
+    setName,
+    setDescription,
+    handleDelete,
+    handleEdit,
+    handleSubmit,
   };
 };

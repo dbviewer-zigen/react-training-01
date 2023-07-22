@@ -1,25 +1,9 @@
-import React, { useState } from "react";
-import { Todo } from "../../types";
+import React from "react";
 import { useLogic } from "./logic";
-import { v4 as uuidv4 } from "uuid";
 
 export const TodoForm = () => {
-  const { error, addTodo } = useLogic();
-
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const newTodo: Todo = {
-      id: uuidv4(),
-      name: name,
-      description: description,
-    };
-    addTodo(newTodo);
-    setName("");
-    setDescription("");
-  };
+  const { name, description, error, setName, setDescription, handleSubmit } =
+    useLogic();
 
   return (
     <form onSubmit={handleSubmit}>
